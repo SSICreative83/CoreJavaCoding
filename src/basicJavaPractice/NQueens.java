@@ -1,0 +1,54 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package basicJavaPractice;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author huijun
+ */
+public class NQueens {
+    public ArrayList<String[]> solveNQueens(int n) {
+        ArrayList<String[]> res = new ArrayList<String[]>();
+        int[] loc = new int[n];
+        dfs(res,loc,0,n);
+        return res; 
+   }
+    
+    public void dfs(ArrayList<String[]> res, int[] loc, int cur, int n){    //good example to uderstand dfs
+        if(cur==n) 
+            printboard(res,loc,n);
+        else{
+            for(int i=0;i<n;i++){
+                loc[cur] = i;
+                if(isValid(loc,cur))
+                    dfs(res,loc,cur+1,n);
+            }
+        }
+    }
+    
+    public boolean isValid(int[] loc, int cur){
+        for(int i=0;i<cur;i++){
+            if(loc[i]==loc[cur]||Math.abs(loc[i]-loc[cur])==(cur-i))
+                return false;
+        }
+        return true;
+    }
+    
+    public void printboard(ArrayList<String[]> res, int[] loc, int n){
+        String[] ans = new String[n];
+        for(int i=0;i<n;i++){
+            String row = new String();
+            for(int j=0;j<n;j++){
+                if(j==loc[i]) row += "Q";
+                else row += ".";
+            }
+            ans[i] = row;
+        }
+        res.add(ans);
+    }
+}   
